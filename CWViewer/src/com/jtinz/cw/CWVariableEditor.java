@@ -3,9 +3,8 @@
  */
 package com.jtinz.cw;
 
-import java.io.InputStream;
-
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -26,7 +25,7 @@ import com.jtinz.cw.types.CWVariable;
  * @author jt
  *
  */
-public class CWDocumentEditor extends EditorPart
+public class CWVariableEditor extends EditorPart
 {
 
 	@Override
@@ -128,8 +127,13 @@ public class CWDocumentEditor extends EditorPart
 			table.setHeaderVisible(true);
 			table.setLinesVisible(true); 
 				
-			tableViewer.setContentProvider(new CWDocumentContentProvider(new CWDocument(((CWMetaInput)getEditorInput()).getRootElement())));
-			tableViewer.setInput(getEditorInput());
+			//tableViewer.setContentProvider(new CWDocumentContentProvider(new CWDocument(((CWMetaInput)getEditorInput()).getRootElement())));
+			//tableViewer.setInput(getEditorInput());
+			CWMetaInput input = (CWMetaInput)getEditorInput();
+			CWDocument document = new CWDocument(input.getRootElement());
+			
+			tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+			tableViewer.setInput(document.getVariableList());
 			
 			GridData gridData = new GridData();
 		    gridData.verticalAlignment = GridData.FILL;

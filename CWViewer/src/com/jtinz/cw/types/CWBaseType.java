@@ -3,6 +3,9 @@
  */
 package com.jtinz.cw.types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -34,18 +37,25 @@ public abstract class CWBaseType {
 	protected static String XML_VALIDATE_TAG = "validate";
 	protected static String XML_SCRIPT_TAG = "script";
 	
-	protected String name;
+	/*protected String name;
 	protected String type;
 
 	protected String guid;
 	protected String label;
 	protected String metaVersion;
-	protected String parent;
+	protected String parent;*/
+	
+	private Map<String, Object> dataMap;
 	
 	protected CWBaseType(Element xmlDocument)
 	{
-		name = xmlDocument.getAttribute(XML_NAME_ATTR);
-		type = xmlDocument.getAttribute(XML_TYPE_ATTR);
+		dataMap = new HashMap<String, Object>();
+		
+		//name = xmlDocument.getAttribute(XML_NAME_ATTR);
+		//type = xmlDocument.getAttribute(XML_TYPE_ATTR);
+		set(XML_NAME_ATTR, xmlDocument.getAttribute(XML_NAME_ATTR));
+		set(XML_TYPE_ATTR, xmlDocument.getAttribute(XML_TYPE_ATTR));
+		
 		
 		//parseElement(xmlDocument);
 	}
@@ -62,7 +72,7 @@ public abstract class CWBaseType {
 			{
 				String nodeType = ((Element)node).getTagName();
 				
-				if(nodeType.equals(XML_GUID_TAG))
+				/*if(nodeType.equals(XML_GUID_TAG))
 				{
 					guid = node.getTextContent();
 				}
@@ -77,6 +87,13 @@ public abstract class CWBaseType {
 				else if(nodeType.equals(XML_EXTENDS_TAG))
 				{
 					parent = node.getTextContent();
+				}*/
+				if(nodeType.equals(XML_GUID_TAG) ||
+					nodeType.equals(XML_LABEL_TAG) ||
+					nodeType.equals(XML_META_VERSION_TAG) ||
+					nodeType.equals(XML_EXTENDS_TAG))
+				{
+					set(nodeType, node.getTextContent());
 				}
 				
 				matchElement((Element)node, nodeType);
@@ -88,42 +105,58 @@ public abstract class CWBaseType {
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		//return name;
+		return (String)get(XML_NAME_ATTR);
 	}
 
 	/**
 	 * @return the type
 	 */
 	public String getType() {
-		return type;
+		//return type;
+		return (String)get(XML_TYPE_ATTR);
 	}
 
 	/**
 	 * @return the guid
 	 */
 	public String getGuid() {
-		return guid;
+		//return guid;
+		return (String)get(XML_GUID_TAG);
 	}
 
 	/**
 	 * @return the label
 	 */
 	public String getLabel() {
-		return label;
+		//return label;
+		return (String)get(XML_LABEL_TAG);
 	}
 
 	/**
 	 * @return the metaVersion
 	 */
 	public String getMetaVersion() {
-		return metaVersion;
+		//return metaVersion;
+		return (String)get(XML_META_VERSION_TAG);
 	}
 
 	/**
 	 * @return the parent
 	 */
 	public String getParent() {
-		return parent;
+		//return parent;
+		return (String)get(XML_EXTENDS_TAG);
+	}
+	
+	public void set(String name, Object value)
+	{
+		dataMap.put(name, value);
+	}
+	
+	public Object get(String name)
+	{
+		return dataMap.get(name);
 	}
 	
 	protected abstract void matchElement(Element element, String nodeType);

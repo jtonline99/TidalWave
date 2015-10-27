@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author jt
@@ -16,19 +14,23 @@ import org.w3c.dom.NodeList;
  */
 public class CWDocument extends CWBaseType {
 	// base document fields
-	private boolean generatedKey;
+	//private boolean generatedKey;
 	
 	// lists
-	private List<CWVariable> variableList = new ArrayList<CWVariable>();
-	private List<CWMethod> methodList = new ArrayList<CWMethod>();
+	//private List<CWVariable> variableList = new ArrayList<CWVariable>();
+	//private List<CWMethod> methodList = new ArrayList<CWMethod>();
 	
 	// db information
-	private String dbSchema;
+	//private String dbSchema;
 	
 	// dom builder
 	public CWDocument(Element xmlDocument)
 	{
 		super(xmlDocument);
+		
+		set(XML_VARIABLE_LIST_TAG, new ArrayList<CWVariable>());
+		set(XML_METHOD_LIST_TAG, new ArrayList<CWMethod>());
+		
 		parseElement(xmlDocument);
 	}
 
@@ -36,21 +38,28 @@ public class CWDocument extends CWBaseType {
 	 * @return the generatedKey
 	 */
 	public boolean isGeneratedKey() {
-		return generatedKey;
+		return ((String)get(XML_GENERATED_KEY_TAG)).equals("true") ? true : false;
 	}
 
 	/**
 	 * @return the dbSchema
 	 */
 	public String getDbSchema() {
-		return dbSchema;
+		return (String)get(XML_DB_SCHEMA_TAG);
 	}
 
 	/**
 	 * @return the variableList
 	 */
 	public List<CWVariable> getVariableList() {
-		return variableList;
+		return (List<CWVariable>)get(XML_VARIABLE_LIST_TAG);
+	}
+
+	/**
+	 * @return the variableList
+	 */
+	public List<CWMethod> getMethodList() {
+		return (List<CWMethod>)get(XML_METHOD_LIST_TAG);
 	}
 
 	@Override
@@ -58,11 +67,13 @@ public class CWDocument extends CWBaseType {
 	{
 		if(nodeType.equals(XML_GENERATED_KEY_TAG))
 		{
-			generatedKey = element.getTextContent().equals("true") ? true : false;
+			//generatedKey = element.getTextContent().equals("true") ? true : false;
+			set(XML_GENERATED_KEY_TAG, element.getTextContent().equals("true") ? "true" : "false");
 		}
 		else if(nodeType.equals(XML_DB_SCHEMA_TAG))
 		{
-			dbSchema = element.getTextContent();
+			//dbSchema = element.getTextContent();
+			set(XML_DB_SCHEMA_TAG, element.getTextContent());
 		}
 		else if(nodeType.equals(XML_VARIABLE_LIST_TAG))
 		{
@@ -70,7 +81,7 @@ public class CWDocument extends CWBaseType {
 		}
 		else if(nodeType.equals(XML_VARIABLE_TAG))
 		{
-			variableList.add(new CWVariable(element));
+			getVariableList().add(new CWVariable(element));
 		}
 		else if(nodeType.equals(XML_METHOD_LIST_TAG))
 		{
@@ -78,7 +89,7 @@ public class CWDocument extends CWBaseType {
 		}
 		else if(nodeType.equals(XML_METHOD_TAG))
 		{
-			methodList.add(new CWMethod(element));
+			getMethodList().add(new CWMethod(element));
 		}
 		
 	}

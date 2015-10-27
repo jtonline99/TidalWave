@@ -83,10 +83,14 @@ public class CWEditor extends MultiPageEditorPart implements IResourceChangeList
 	 */
 	void createDesignPage() {
 		try {
-			CWDocumentEditor cwedit = new CWDocumentEditor();
+			CWVariableEditor cwedit1 = new CWVariableEditor();
 			//editor = new TextEditor();
-			int index = addPage(cwedit, getEditorInput());
-			setPageText(index, "Design");
+			int index = addPage(cwedit1, getEditorInput());
+			setPageText(index, "Variables");
+			
+			CWMethodEditor cwedit2 = new CWMethodEditor();
+			index = addPage(cwedit2, getEditorInput());
+			setPageText(index, "Methods");
 			
 			
 			// test stuff
