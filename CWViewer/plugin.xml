@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="cwviewer.editors.MultiPageEditor"
+            contributorClass="cwviewer.editors.MultiPageEditorContributor"
+            extensions="xml"
+            icon="icons/sample.gif"
+            id="cwviewer.editors.MultiPageEditor"
+            name="Sample Multi-page Editor">
+      </editor>
+      <editor
+            class="com.jtinz.cw.CWEditor"
+            contributorClass="com.jtinz.cw.CWEditorContributor"
+            extensions="xml"
+            icon="icons/sample.gif"
+            id="com.jtinz.cw.CWEditor"
+            name="CW Editor">
+      </editor>
+   </extension>
+
+</plugin>
