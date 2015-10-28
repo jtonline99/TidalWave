@@ -6,6 +6,9 @@ import java.io.StringWriter;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.resources.IMarker;
@@ -29,6 +32,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.ui.*;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.ide.IDE;
@@ -44,6 +48,10 @@ import org.eclipse.ui.ide.IDE;
  */
 public class CWEditor extends MultiPageEditorPart implements IResourceChangeListener{
 
+	// config variables
+	private String editorClasspath = "com.jtinz.cw.editors";
+	private Map<String, String[]> designConfig;
+	
 	/** The text editor used in page 0. */
 	private TextEditor editor;
 
@@ -58,6 +66,12 @@ public class CWEditor extends MultiPageEditorPart implements IResourceChangeList
 	public CWEditor() {
 		super();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
+		
+		designConfig = new HashMap<String, String[]>();
+		designConfig.put("document", new String[]{ "CWVariableEditor", "CWMethodEditor"});
+		designConfig.put("script", new String[]{"CWScriptEditor"});
+		designConfig.put("dataType", new String[]{});
+		designConfig.put("process", new String[]{"CWMethodEditor"});
 	}
 	/**
 	 * Creates the source viewer page of the multi-page editor,
@@ -83,31 +97,53 @@ public class CWEditor extends MultiPageEditorPart implements IResourceChangeList
 	 */
 	void createDesignPage() {
 		try {
+			/*CWPropertiesEditor cwedit3 = new CWPropertiesEditor();
+			//editor = new TextEditor();
+			int index = addPage(cwedit3, getEditorInput());
+			setPageText(index, cwedit3.getPartName());
+			
 			CWVariableEditor cwedit1 = new CWVariableEditor();
 			//editor = new TextEditor();
-			int index = addPage(cwedit1, getEditorInput());
-			setPageText(index, "Variables");
+			index = addPage(cwedit1, getEditorInput());
+			setPageText(index, cwedit1.getPartName());
 			
 			CWMethodEditor cwedit2 = new CWMethodEditor();
 			index = addPage(cwedit2, getEditorInput());
-			setPageText(index, "Methods");
+			setPageText(index, cwedit2.getPartName());*/
 			
 			
 			// test stuff
 			/*InputStream data = ((IFileEditorInput)getEditorInput()).getFile().getContents();*/
 			CWMetaInput meta = (CWMetaInput)getEditorInput();
 			
-			setPartName(meta.getMetaName() + " [" + meta.getMetaType() + "]");
-		} catch (PartInitException e) {
-			ErrorDialog.openError(
-				getSite().getShell(),
-				"Error creating nested text editor",
-				null,
-				e.getStatus());
-		} /*catch (Exception ex)
+			setPartName(meta.getMetaName());// + " [" + meta.getMetaType() + "]");
+			
+			String metaType = meta.getMetaType();
+			String[] views = designConfig.get(metaType);
+			EditorPart designEditor;
+			int index;
+			
+			if(views != null)
+			{
+			
+				designEditor = (EditorPart) Class.forName(editorClasspath + ".CWPropertiesEditor").newInstance();
+				index = addPage(designEditor, getEditorInput());
+				setPageText(index, designEditor.getPartName());
+			
+			
+				for(String view : views)
+				{
+					designEditor = (EditorPart) Class.forName(editorClasspath + "." + view).newInstance();
+					index = addPage(designEditor, getEditorInput());
+					setPageText(index, designEditor.getPartName());
+				}
+			
+			}
+		}
+		catch (Exception ex)
 		{
 			System.out.println(ex);
-		}*/
+		}
 	}
 	/**
 	 * Creates page 1 of the multi-page editor,

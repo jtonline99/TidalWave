@@ -9,12 +9,12 @@ import org.w3c.dom.Element;
  * @author jt
  *
  */
-public class CWParameter extends CWBaseType {
+public class CWDataType extends CWBaseType 
+{
 
-	public CWParameter(Element xmlDocument) {
+	public CWDataType(Element xmlDocument) {
 		super(xmlDocument);
-		
-		set(XML_PARAMETER_TYPE_TAG, ""); // blank out the type field, it seems to be incorrect in the model
+		set(XML_TYPE_TAG, "dataType"); // default in the type
 		
 		parseElement(xmlDocument);
 	}
@@ -24,11 +24,7 @@ public class CWParameter extends CWBaseType {
 	 */
 	@Override
 	protected void matchElement(Element element, String nodeType) {
-		if(nodeType.equals(XML_PARAMETER_TYPE_TAG))
-		{
-			//dbSchema = element.getTextContent();
-			set(nodeType, element.getTextContent());
-		}
+		
 	}
 
 }

@@ -36,6 +36,13 @@ public abstract class CWBaseType {
 	protected static String XML_AUTOSAVE_TAG = "autosave";
 	protected static String XML_VALIDATE_TAG = "validate";
 	protected static String XML_SCRIPT_TAG = "script";
+	protected static String XML_ENUM_VALUE_LIST_TAG = "valueList";
+	protected static String XML_ENUM_VALUE_TAG = "value";
+	protected static String XML_CODE_ATTR = "code";
+	protected static String XML_PARAMETER_LIST_TAG = "parameterList";
+	protected static String XML_PARAMETER_TAG = "parameter";
+	protected static String XML_PARAMETER_TYPE_TAG = "type";
+	protected static String XML_PARAMETER_MANDATORY_TAG = "mandatory";
 	
 	/*protected String name;
 	protected String type;
@@ -55,7 +62,10 @@ public abstract class CWBaseType {
 		//type = xmlDocument.getAttribute(XML_TYPE_ATTR);
 		set(XML_NAME_ATTR, xmlDocument.getAttribute(XML_NAME_ATTR));
 		set(XML_TYPE_ATTR, xmlDocument.getAttribute(XML_TYPE_ATTR));
-		
+		set(XML_GUID_TAG, ""); // default
+		set(XML_LABEL_TAG, ""); // default
+		set(XML_META_VERSION_TAG, ""); // default
+		set(XML_EXTENDS_TAG, ""); // default
 		
 		//parseElement(xmlDocument);
 	}

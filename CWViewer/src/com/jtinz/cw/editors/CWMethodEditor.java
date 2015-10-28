@@ -1,15 +1,23 @@
 /**
  * 
  */
-package com.jtinz.cw;
+package com.jtinz.cw.editors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IEditorInput;
@@ -18,14 +26,15 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
 
+import com.jtinz.cw.CWMetaInput;
 import com.jtinz.cw.types.CWDocument;
-import com.jtinz.cw.types.CWVariable;
+import com.jtinz.cw.types.CWMethod;
 
 /**
  * @author jt
  *
  */
-public class CWVariableEditor extends EditorPart
+public class CWMethodEditor extends EditorPart
 {
 
 	@Override
@@ -47,7 +56,7 @@ public class CWVariableEditor extends EditorPart
 		
 		setInput(editorInput);
 		setSite(site);
-		//setPartName("test");
+		setPartName("Methods");
 		
 	}
 
@@ -66,19 +75,21 @@ public class CWVariableEditor extends EditorPart
 		// add controls
 		try
 		{
-			//InputStream data = ((IFileEditorInput)getEditorInput()).getFile().getContents();
-			//CWMeta meta = new CWMeta(data);
+			CWMetaInput input = (CWMetaInput)getEditorInput();
+			CWDocument document = (CWDocument)input.getModel();//new CWDocument(input.getRootElement());
 			
-			//setPartName(meta.getMetaName() + " [" + meta.getMetaType() + "]");
-			//System.out.println(getSite().getPart().getTitle());
-			//IWorkbenchPage page = getSite().getPage();
-			//String i = ";";
-			//System.out.println(getSite().getPage().getActiveEditor().getTitle());
+			/*GridLayout layout = new GridLayout();
+		    layout.numColumns = 1;
+		    parent.setLayout(layout);*/
+		    
+		    parent.setLayout(new FillLayout(SWT.VERTICAL));
+			
+			SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
 			
 			// setup table
-			TableViewer tableViewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
+			final TableViewer tableViewer = new TableViewer(sashForm, SWT.MULTI | SWT.H_SCROLL
 				      | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-			
+			//tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {});
 			// setup name column
 			TableViewerColumn colName = new TableViewerColumn(tableViewer, SWT.NONE);
 			colName.getColumn().setWidth(200);
@@ -86,7 +97,7 @@ public class CWVariableEditor extends EditorPart
 			colName.setLabelProvider(new ColumnLabelProvider() {
 				  @Override
 				  public String getText(Object element) {
-				    return ((CWVariable)element).getName();
+				    return ((CWMethod)element).getName();
 				  }
 				});
 			
@@ -97,51 +108,50 @@ public class CWVariableEditor extends EditorPart
 			colValue.setLabelProvider(new ColumnLabelProvider() {
 				  @Override
 				  public String getText(Object element) {
-				    return ((CWVariable)element).getValueType();
-				  }
-				});
-			
-			// setup db table column
-			TableViewerColumn colTable = new TableViewerColumn(tableViewer, SWT.NONE);
-			colTable.getColumn().setWidth(200);
-			colTable.getColumn().setText("DB Table");
-			colTable.setLabelProvider(new ColumnLabelProvider() {
-				  @Override
-				  public String getText(Object element) {
-				    return ((CWVariable)element).getTable();
-				  }
-				});
-			
-			// setup db column column
-			TableViewerColumn colColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-			colColumn.getColumn().setWidth(200);
-			colColumn.getColumn().setText("DB Column");
-			colColumn.setLabelProvider(new ColumnLabelProvider() {
-				  @Override
-				  public String getText(Object element) {
-				    return ((CWVariable)element).getColumn();
+				    return ((CWMethod)element).getValueType();
 				  }
 				});
 			
 			final Table table = tableViewer.getTable();
 			table.setHeaderVisible(true);
-			table.setLinesVisible(true); 
-				
-			//tableViewer.setContentProvider(new CWDocumentContentProvider(new CWDocument(((CWMetaInput)getEditorInput()).getRootElement())));
-			//tableViewer.setInput(getEditorInput());
-			CWMetaInput input = (CWMetaInput)getEditorInput();
-			CWDocument document = new CWDocument(input.getRootElement());
+			table.setLinesVisible(true);
+			
 			
 			tableViewer.setContentProvider(ArrayContentProvider.getInstance());
-			tableViewer.setInput(document.getVariableList());
+			tableViewer.setInput(document.getMethodList());
 			
-			GridData gridData = new GridData();
+			/*GridData gridData = new GridData();
 		    gridData.verticalAlignment = GridData.FILL;
 		    gridData.horizontalSpan = 2;
 		    gridData.grabExcessHorizontalSpace = true;
 		    gridData.grabExcessVerticalSpace = true;
 		    gridData.horizontalAlignment = GridData.FILL;
-		    tableViewer.getControl().setLayoutData(gridData);
+		    tableViewer.getControl().setLayoutData(gridData);*/
+			
+		    // setup script text area
+			final TextViewer textViewer = new TextViewer(sashForm, SWT.MULTI | SWT.V_SCROLL);
+			textViewer.setDocument(new Document(""));
+			
+			/*gridData = new GridData();
+		    gridData.verticalAlignment = GridData.FILL;
+		    gridData.horizontalSpan = 2;
+		    gridData.grabExcessHorizontalSpace = true;
+		    gridData.grabExcessVerticalSpace = true;
+		    gridData.horizontalAlignment = GridData.FILL;
+		    textViewer.getControl().setLayoutData(gridData);*/
+			
+			sashForm.setWeights(new int[]{1, 3});
+		    
+		    // add listener to populate textViewer field
+		    tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		    	  @Override
+		    	  public void selectionChanged(SelectionChangedEvent event) {
+		    	    IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
+		    	    CWMethod firstElement = (CWMethod)selection.getFirstElement();
+		    	    
+		    	    textViewer.getDocument().set(firstElement.getScript());
+		    	  }
+		    	}); 
 
 		}
 		catch (Exception ex)

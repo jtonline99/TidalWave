@@ -17,6 +17,11 @@ public class CWVariable extends CWBaseType {
 	{
 		super(xmlDocument);
 		
+		set(XML_VALUE_TYPE_TAG, ""); // default
+		set(XML_TABLE_TAG, ""); // default
+		set(XML_COLUMN_TAG, ""); // default
+		set(XML_PRIMARY_KEY_TAG, "false"); // default
+		
 		parseElement(xmlDocument);
 	}
 

@@ -30,6 +30,8 @@ public class CWDocument extends CWBaseType {
 		
 		set(XML_VARIABLE_LIST_TAG, new ArrayList<CWVariable>());
 		set(XML_METHOD_LIST_TAG, new ArrayList<CWMethod>());
+		set(XML_TYPE_TAG, "document"); // default in the type
+		set(XML_GENERATED_KEY_TAG, "false"); // default
 		
 		parseElement(xmlDocument);
 	}
@@ -68,12 +70,12 @@ public class CWDocument extends CWBaseType {
 		if(nodeType.equals(XML_GENERATED_KEY_TAG))
 		{
 			//generatedKey = element.getTextContent().equals("true") ? true : false;
-			set(XML_GENERATED_KEY_TAG, element.getTextContent().equals("true") ? "true" : "false");
+			set(nodeType, element.getTextContent().equals("true") ? "true" : "false");
 		}
 		else if(nodeType.equals(XML_DB_SCHEMA_TAG))
 		{
 			//dbSchema = element.getTextContent();
-			set(XML_DB_SCHEMA_TAG, element.getTextContent());
+			set(nodeType, element.getTextContent());
 		}
 		else if(nodeType.equals(XML_VARIABLE_LIST_TAG))
 		{

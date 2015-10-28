@@ -9,11 +9,14 @@ import org.w3c.dom.Element;
  * @author jt
  *
  */
-public class CWDType extends CWBaseType 
-{
+public class CWProcess extends CWBaseType {
 
-	protected CWDType(Element xmlDocument) {
+	public CWProcess(Element xmlDocument) {
 		super(xmlDocument);
+		
+		set(XML_TYPE_TAG, "process"); // default in the type
+		
+		parseElement(xmlDocument);
 	}
 
 	/* (non-Javadoc)
@@ -21,7 +24,8 @@ public class CWDType extends CWBaseType
 	 */
 	@Override
 	protected void matchElement(Element element, String nodeType) {
-		
+		// TODO Auto-generated method stub
+
 	}
 
 }

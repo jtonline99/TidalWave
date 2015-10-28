@@ -14,13 +14,18 @@ public class CWMethod extends CWBaseType
 	protected CWMethod(Element xmlDocument) {
 		super(xmlDocument);
 		
+		set(XML_VALUE_TYPE_TAG, ""); // default
+		set(XML_VALIDATE_TAG, "false"); // default
+		set(XML_SCRIPT_TAG, ""); // default
+		set(XML_AUTOSAVE_TAG, "false"); // default
+		
 		parseElement(xmlDocument);
 	}
 
 	@Override
 	protected void matchElement(Element element, String nodeType) {
 		if(nodeType.equals(XML_VALUE_TYPE_TAG) ||
-				nodeType.equals(XML_VALIDATE_TAG))
+				nodeType.equals(XML_SCRIPT_TAG))
 		{
 			//valueType = element.getTextContent();
 			set(nodeType, element.getTextContent());
