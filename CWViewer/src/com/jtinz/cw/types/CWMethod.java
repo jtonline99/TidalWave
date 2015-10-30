@@ -18,6 +18,8 @@ public class CWMethod extends CWBaseType
 		set(XML_VALIDATE_TAG, "false"); // default
 		set(XML_SCRIPT_TAG, ""); // default
 		set(XML_AUTOSAVE_TAG, "false"); // default
+		set(XML_CATEGORY_TAG, ""); // default
+		set(XML_SYSTEM_TAG, ""); // default
 		
 		parseElement(xmlDocument);
 	}
@@ -25,7 +27,9 @@ public class CWMethod extends CWBaseType
 	@Override
 	protected void matchElement(Element element, String nodeType) {
 		if(nodeType.equals(XML_VALUE_TYPE_TAG) ||
-				nodeType.equals(XML_SCRIPT_TAG))
+				nodeType.equals(XML_SCRIPT_TAG) ||
+				nodeType.equals(XML_CATEGORY_TAG) ||
+				nodeType.equals(XML_SYSTEM_TAG))
 		{
 			//valueType = element.getTextContent();
 			set(nodeType, element.getTextContent());
@@ -64,5 +68,15 @@ public class CWMethod extends CWBaseType
 	public String getScript()
 	{
 		return (String)get(XML_SCRIPT_TAG);
+	}
+	
+	public String getCategory()
+	{
+		return (String)get(XML_CATEGORY_TAG);
+	}
+	
+	public String getSystem()
+	{
+		return (String)get(XML_SYSTEM_TAG);
 	}
 }

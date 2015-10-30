@@ -43,6 +43,15 @@ public abstract class CWBaseType {
 	protected static String XML_PARAMETER_TAG = "parameter";
 	protected static String XML_PARAMETER_TYPE_TAG = "type";
 	protected static String XML_PARAMETER_MANDATORY_TAG = "mandatory";
+	protected static String XML_ACTIVITY_LIST_TAG = "childList";
+	protected static String XML_PROCESS_ACTIVITY_TAG = "activity";
+	protected static String XML_ACTIVITY_TAG = "child";
+	protected static String XML_X_COORD_TAG = "x";
+	protected static String XML_Y_COORD_TAG = "y";
+	protected static String XML_PARTICIPANT_TAG = "participant";
+	protected static String XML_ELEMENT_TAG = "element";
+	protected static String XML_CATEGORY_TAG = "category";
+	protected static String XML_SYSTEM_TAG = "system";
 	
 	/*protected String name;
 	protected String type;

@@ -35,6 +35,9 @@ import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
+
+import com.jtinz.cw.types.CWBaseType;
+
 import org.eclipse.ui.ide.IDE;
 
 /**
@@ -71,7 +74,11 @@ public class CWEditor extends MultiPageEditorPart implements IResourceChangeList
 		designConfig.put("document", new String[]{ "CWVariableEditor", "CWMethodEditor"});
 		designConfig.put("script", new String[]{"CWScriptEditor"});
 		designConfig.put("dataType", new String[]{});
-		designConfig.put("process", new String[]{"CWMethodEditor"});
+		designConfig.put("process", new String[]{"CWProcessEditor"});
+		designConfig.put("findSql", new String[]{"CWMethodEditor"});
+		designConfig.put("findScript", new String[]{"CWMethodEditor"});
+		designConfig.put("findDoc", new String[]{"CWMethodEditor"});
+		designConfig.put("namespace", new String[]{});
 	}
 	/**
 	 * Creates the source viewer page of the multi-page editor,
@@ -116,7 +123,27 @@ public class CWEditor extends MultiPageEditorPart implements IResourceChangeList
 			/*InputStream data = ((IFileEditorInput)getEditorInput()).getFile().getContents();*/
 			CWMetaInput meta = (CWMetaInput)getEditorInput();
 			
-			setPartName(meta.getMetaName());// + " [" + meta.getMetaType() + "]");
+			//setPartName(meta.getMetaName());// + " [" + meta.getMetaType() + "]");
+			//setPartName(meta.getModel().getName());
+			CWBaseType model = meta.getModel();
+			String pageName = meta.getMetaName();
+			String pageLabel = model != null ? model.getLabel() : null;
+			String partName = null;
+			
+			if(pageLabel != null && !pageLabel.equals(""))
+			{
+				partName = pageLabel;
+			}
+			else if(pageName != null && !pageName.equals(""))
+			{
+				partName = pageName;
+			}
+			else
+			{
+				partName = meta.getFile().getName();
+			}
+			
+			setPartName(partName);
 			
 			String metaType = meta.getMetaType();
 			String[] views = designConfig.get(metaType);

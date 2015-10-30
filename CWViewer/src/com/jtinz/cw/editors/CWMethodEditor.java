@@ -3,6 +3,8 @@
  */
 package com.jtinz.cw.editors;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.TextViewer;
@@ -27,6 +29,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
 
 import com.jtinz.cw.CWMetaInput;
+import com.jtinz.cw.types.CWBaseType;
 import com.jtinz.cw.types.CWDocument;
 import com.jtinz.cw.types.CWMethod;
 
@@ -76,7 +79,7 @@ public class CWMethodEditor extends EditorPart
 		try
 		{
 			CWMetaInput input = (CWMetaInput)getEditorInput();
-			CWDocument document = (CWDocument)input.getModel();//new CWDocument(input.getRootElement());
+			CWBaseType document = (CWBaseType)input.getModel();//new CWDocument(input.getRootElement());
 			
 			/*GridLayout layout = new GridLayout();
 		    layout.numColumns = 1;
@@ -97,7 +100,17 @@ public class CWMethodEditor extends EditorPart
 			colName.setLabelProvider(new ColumnLabelProvider() {
 				  @Override
 				  public String getText(Object element) {
-				    return ((CWMethod)element).getName();
+				    //return ((CWMethod)element).getName();
+					  try
+					  {
+						  Method getNameMethod = element.getClass().getMethod("getName");
+						  
+						  return (String) getNameMethod.invoke(element);
+					  }
+					  catch(Exception ex)
+					  {}
+					  
+					  return "";
 				  }
 				});
 			
@@ -108,7 +121,17 @@ public class CWMethodEditor extends EditorPart
 			colValue.setLabelProvider(new ColumnLabelProvider() {
 				  @Override
 				  public String getText(Object element) {
-				    return ((CWMethod)element).getValueType();
+				    //return ((CWMethod)element).getValueType();
+					  try
+					  {
+						  Method getNameMethod = element.getClass().getMethod("getValueType");
+						  
+						  return (String) getNameMethod.invoke(element);
+					  }
+					  catch(Exception ex)
+					  {}
+					  
+					  return "";
 				  }
 				});
 			
@@ -118,7 +141,15 @@ public class CWMethodEditor extends EditorPart
 			
 			
 			tableViewer.setContentProvider(ArrayContentProvider.getInstance());
-			tableViewer.setInput(document.getMethodList());
+			//tableViewer.setInput(document.getMethodList());
+			try
+			  {
+				  Method getNameMethod = document.getClass().getMethod("getMethodList");
+				  
+				  tableViewer.setInput(getNameMethod.invoke(document));
+			  }
+			  catch(Exception ex)
+			  {}
 			
 			/*GridData gridData = new GridData();
 		    gridData.verticalAlignment = GridData.FILL;

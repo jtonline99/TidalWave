@@ -46,6 +46,12 @@ public class CWMetaInput implements IFileEditorInput
 		typesConfig.put("script", "CWScript");
 		typesConfig.put("dataType", "CWDataType");
 		typesConfig.put("process", "CWProcess");
+		typesConfig.put("findSql", "CWFinder");
+		typesConfig.put("findScript", "CWFinder");
+		typesConfig.put("findDoc", "CWFinder");
+		typesConfig.put("nameSpace", "CWNamespace");
+		typesConfig.put("processSignal", "CWSignal");
+		typesConfig.put("userInterface", "CWUserInterface");
 		
 		try
 		{
