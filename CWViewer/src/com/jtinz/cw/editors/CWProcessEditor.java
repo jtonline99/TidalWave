@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -103,19 +104,24 @@ public class CWProcessEditor extends EditorPart
 			
 			SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
 			
-		    TreeViewer treeViewer = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL
-				      | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		    Tree tree = new Tree(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+			/*TreeViewer treeViewer = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL
+				      | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);*/
+		    		TreeViewer treeViewer = new TreeViewer(tree);
+		    tree.setHeaderVisible(true);
+		    
+		    TreeColumn column1 = new TreeColumn(tree, SWT.LEFT);
+		    column1.setText("Name");
+		    column1.setWidth(200);
+		    TreeColumn column2 = new TreeColumn(tree, SWT.LEFT);
+		    column2.setText("Type");
+		    column2.setWidth(150);
+		    
+		    
 		    treeViewer.setContentProvider(new CWActivityTreeContentProvider());
 		    treeViewer.setLabelProvider(new CWActivityLabelProvider());
 		    treeViewer.setInput(document);
 		    treeViewer.expandAll();
-		    
-		    /*TreeColumn column1 = new TreeColumn(treeViewer, SWT.LEFT);
-		    column1.setText("Name");
-		    column1.setWidth(200);
-		    TreeColumn column2 = new TreeColumn(treeViewer, SWT.CENTER);
-		    column2.setText("Column 2");
-		    column2.setWidth(200);*/
 		    
 		    //treeViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		    

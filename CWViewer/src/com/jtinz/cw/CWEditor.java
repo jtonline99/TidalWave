@@ -36,6 +36,7 @@ import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
+import com.jtinz.cw.eclipse.XMLEditor;
 import com.jtinz.cw.types.CWBaseType;
 
 import org.eclipse.ui.ide.IDE;
@@ -74,7 +75,7 @@ public class CWEditor extends MultiPageEditorPart implements IResourceChangeList
 		designConfig.put("document", new String[]{ "CWVariableEditor", "CWMethodEditor"});
 		designConfig.put("script", new String[]{"CWScriptEditor"});
 		designConfig.put("dataType", new String[]{});
-		designConfig.put("process", new String[]{"CWProcessEditor"});
+		designConfig.put("process", new String[]{"CWProcessDiagramEditor", "CWProcessEditor"});
 		designConfig.put("findSql", new String[]{"CWMethodEditor"});
 		designConfig.put("findScript", new String[]{"CWMethodEditor"});
 		designConfig.put("findDoc", new String[]{"CWMethodEditor"});
@@ -86,7 +87,7 @@ public class CWEditor extends MultiPageEditorPart implements IResourceChangeList
 	 */
 	void createSourcePage() {
 		try {
-			editor = new TextEditor();
+			editor = new XMLEditor();
 			int index = addPage(editor, getEditorInput());
 			setPageText(index, "Source");
 			

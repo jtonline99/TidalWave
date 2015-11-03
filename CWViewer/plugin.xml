@@ -4,14 +4,6 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="cwviewer.editors.MultiPageEditor"
-            contributorClass="cwviewer.editors.MultiPageEditorContributor"
-            extensions="xml"
-            icon="icons/sample.gif"
-            id="cwviewer.editors.MultiPageEditor"
-            name="Sample Multi-page Editor">
-      </editor>
-      <editor
             class="com.jtinz.cw.CWEditor"
             contributorClass="com.jtinz.cw.CWEditorContributor"
             extensions="xml"

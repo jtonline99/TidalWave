@@ -5,7 +5,6 @@ package com.jtinz.cw.editors.providers;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import com.jtinz.cw.types.CWActivity;
@@ -14,7 +13,7 @@ import com.jtinz.cw.types.CWActivity;
  * @author jt
  *
  */
-public class CWActivityLabelProvider implements ITableLabelProvider {
+public class CWActivityTableLabelProvider implements ILabelProvider {
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
@@ -53,27 +52,20 @@ public class CWActivityLabelProvider implements ITableLabelProvider {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ILabelProvider#getText(java.lang.Object)
+	 * @see org.eclipse.jface.viewers.ILabelProvider#getImage(java.lang.Object)
 	 */
-
 	@Override
-	public Image getColumnImage(Object arg0, int arg1) {
-		return null; // unimplemented
+	public Image getImage(Object arg0) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ILabelProvider#getText(java.lang.Object)
+	 */
 	@Override
-	public String getColumnText(Object element, int col) {
-		switch(col)
-		{
-		case 0:
-			return ((CWActivity)element).getLabel().toString();
-
-		case 1:
-			return ((CWActivity)element).getType().toString();
-
-		}
-		
-		return null;
+	public String getText(Object arg0) {
+		return ((CWActivity)arg0).getLabel().toString();// +" : " + ((CWActivity)arg0).getType().toString();
 	}
 
 }

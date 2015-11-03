@@ -28,8 +28,8 @@ public class CWActivity extends CWBaseType {
 		
 		set(XML_ACTIVITY_LIST_TAG, new ArrayList<CWActivity>());
 		set(XML_METHOD_LIST_TAG, new ArrayList<CWMethod>());
-		set(XML_X_COORD_TAG, "0");
-		set(XML_Y_COORD_TAG, "0");
+		set(XML_X_COORD_TAG, "0.0");
+		set(XML_Y_COORD_TAG, "0.0");
 		set(XML_PARTICIPANT_TAG, "");
 		set(XML_ELEMENT_TAG, "");
 
@@ -84,19 +84,19 @@ public class CWActivity extends CWBaseType {
 	/**
 	 * @return the x coord
 	 */
-	public int getX() {
+	public double getX() {
 		String x = (String)get(XML_X_COORD_TAG);
 		
-		return x != null ? Integer.parseInt(x) : 0;
+		return x != null ? Double.parseDouble(x) : 0;
 	}
 
 	/**
 	 * @return the y coord
 	 */
-	public int getY() {
-		String y = (String)get(XML_X_COORD_TAG);
+	public double getY() {
+		String y = (String)get(XML_Y_COORD_TAG);
 		
-		return y != null ? Integer.parseInt(y) : 0;
+		return y != null ? Double.parseDouble(y) : 0;
 	}
 
 	/**
