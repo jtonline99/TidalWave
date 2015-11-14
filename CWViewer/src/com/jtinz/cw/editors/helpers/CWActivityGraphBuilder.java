@@ -17,6 +17,7 @@ public class CWActivityGraphBuilder
 	
 	public void generateGraph(CWActivity root)
 	{
+		_activityList.add(root);
 		traverseTree(root, _activityList);
 		
 		//System.out.println(_activityList);

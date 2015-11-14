@@ -65,7 +65,12 @@ public class CWActivityTableLabelProvider implements ILabelProvider {
 	 */
 	@Override
 	public String getText(Object arg0) {
-		return ((CWActivity)arg0).getLabel().toString();// +" : " + ((CWActivity)arg0).getType().toString();
+		if(arg0 instanceof CWActivity)
+		{
+			return ((CWActivity)arg0).getLabel().toString();// +" : " + ((CWActivity)arg0).getType().toString();
+		}
+		
+		return null;
 	}
 
 }

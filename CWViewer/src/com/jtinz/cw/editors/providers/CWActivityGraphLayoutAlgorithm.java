@@ -38,7 +38,7 @@ public class CWActivityGraphLayoutAlgorithm implements LayoutAlgorithm {
 			entity.setLocationInLayout(tx, ty);
 			entity.setSizeInLayout(80, 50);
 			
-			System.out.println(tx +","+ ty);
+			//System.out.println(tx +","+ ty);
 		}
 		//System.out.println("test layout");
 

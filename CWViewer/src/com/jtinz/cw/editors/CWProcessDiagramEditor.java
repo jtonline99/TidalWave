@@ -41,6 +41,7 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 
 import com.jtinz.cw.CWMetaInput;
 import com.jtinz.cw.editors.helpers.CWActivityGraphBuilder;
+import com.jtinz.cw.editors.helpers.CWActivityGraphBuilder2;
 import com.jtinz.cw.editors.providers.CWActivityGraphContentProvider;
 import com.jtinz.cw.editors.providers.CWActivityGraphLayoutAlgorithm;
 import com.jtinz.cw.editors.providers.CWActivityLabelProvider;
@@ -59,6 +60,7 @@ import com.jtinz.cw.types.CWVariable;
  */
 public class CWProcessDiagramEditor extends EditorPart
 {
+	GraphViewer graphViewer;
 
 	@Override
 	public void doSave(IProgressMonitor progressMonitor) 
@@ -104,13 +106,16 @@ public class CWProcessDiagramEditor extends EditorPart
 			CWActivityGraphBuilder builder = new CWActivityGraphBuilder();
 			builder.generateGraph(document.getActivity());
 			
-			GraphViewer graphViewer = new GraphViewer(parent, SWT.BORDER);
+			graphViewer = new GraphViewer(parent, SWT.BORDER);
 			
 			graphViewer.setContentProvider(new CWActivityGraphContentProvider());
 			graphViewer.setLabelProvider(new CWActivityTableLabelProvider());
-			graphViewer.setInput(builder);
 			graphViewer.setLayoutAlgorithm(new CWActivityGraphLayoutAlgorithm(), true);
-			graphViewer.applyLayout();
+			graphViewer.setInput(builder);
+			//graphViewer.applyLayout();
+			
+			//CWActivityGraphBuilder2 testBuilder = new CWActivityGraphBuilder2();
+			//testBuilder.generateGraph(document.getActivity());
 			
 		}
 		catch (Exception ex)
@@ -123,6 +128,7 @@ public class CWProcessDiagramEditor extends EditorPart
 	public void setFocus()
 	{
 		// not implemented
+		graphViewer.applyLayout();
 		
 	}
 	
