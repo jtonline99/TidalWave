@@ -31,7 +31,10 @@ public class CWActivityGraphBuilder
 			{
 				traverseTree(activity, activityList);
 				
-				if(activity.getType().equals("caseActivity") != true)
+				if(activity.getType().equals("caseActivity") != true &&
+				   activity.getType().equals("onExceptionActivity") != true &&
+				   activity.getType().equals("compensateActivity") != true 
+						)
 				{
 					activityList.add(activity);
 				}
